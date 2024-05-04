@@ -1,0 +1,83 @@
+# Cache directories
+**/cache/
+
+# Session files
+/storage/framework/sessions/
+
+# Compiled views or templates
+**/views/**/*.{php,blade.php}  # Include blade.php for Laravel
+
+# User uploads or assets
+/public/uploads/
+/public/assets/
+
+# Compiled files
+*.{com,class,dll,exe,o,so}
+
+# Temporary files
+*.swp
+*~
+*.bak
+
+# Log files
+**/logs/
+
+# Compiled binary files
+*.{bin,jar,war}
+
+# Environment configuration overrides
+.env.local
+
+# Dependency directories (if not already excluded)
+/vendor/
+/node_modules/
+
+# Build output directories
+/dist/
+/out/
+/build/
+
+# Database files
+*.{sqlite,sqlite3,sql}  # Add specific database extensions
+
+# System-specific files (example for macOS)
+.DS_Store
+
+# Editor specific files (consider adding for other editors)
+.vscode/
+
+# Laravel specific
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+
+# Environment specific
+.env
+.env.backup
+.env.production
+
+# PHPUnit
+.phpunit.cache
+.phpunit.result.cache
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Other project specific files
+auth.json
+
+# Debugging logs
+npm-debug.log
+yarn-error.log
+
+# Lock files
+composer.lock
+package-lock.json
+
+# Docker related (if applicable)
+docker-compose.override.yml
+
+# Fleet related (if applicable)
+.fleet/
