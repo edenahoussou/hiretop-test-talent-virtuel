@@ -44,4 +44,4 @@ We welcome contributions to HireTop! To contribute, follow these steps:
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-For any inquiries or feedback, please contact us at [contact@hiretop.com](mailto:aedenrosario@gmail.com).
+For any inquiries or feedback, please contact us at [aedenrosario@gmail.com](mailto:aedenrosario@gmail.com).
