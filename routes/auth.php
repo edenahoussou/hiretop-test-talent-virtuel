@@ -20,6 +20,14 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
                 ->name('login');
+                
+Route::get('auth/google', [AuthenticatedSessionController::class, 'authGoogle'])
+                ->middleware('guest')
+                ->name('google.login');
+
+Route::get('auth/google/callback', [AuthenticatedSessionController::class, 'handleGoogleCallback'])
+                ->middleware('guest')
+                ->name('google.callback');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest');
