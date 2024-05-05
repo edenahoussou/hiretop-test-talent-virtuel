@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use MercurySeries\Flashy\Flashy;
 
 class RegisteredUserController extends Controller
 {
@@ -33,11 +34,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'terms' => 'required',
         ]);
+
 
         $user = User::create([
             'name' => $request->name,
@@ -48,6 +52,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        Flashy::message('Votre compte a bien été crée. Vérifiez votre boite email pour activer votre compte.');
 
         return redirect(RouteServiceProvider::HOME);
     }
