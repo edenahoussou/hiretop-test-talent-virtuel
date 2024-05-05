@@ -9,7 +9,7 @@
                         <p class="font-sm text-brand-2">{{__('Bienvenue !') }}</p>
                         <h2 class="mt-10 mb-5 text-brand-1">{{__('Se connecter')}}</h2>
                         <p class="font-sm text-muted mb-30">{{__('Connectez-vous pour continuer') }}</p>
-                        <button class="btn social-login hover-up mb-20"><img
+                        <button class="btn social-login hover-up mb-20" onclick="window.location.href='{{route('google.login')}}'"><img
                                 src="{{ asset('assets/imgs/template/icons/icon-google.svg') }}" alt="{{config('app.name')}}"><strong>{{__('Continuer avec Google')}}</strong></button>
                         <div class="divider-text-center"><span>{{__('ou') }}</span></div>
                     </div>

@@ -9,7 +9,7 @@
                         <p class="font-sm text-brand-2">{{__('S\'inscrire')}}</p>
                         <h2 class="mt-10 mb-5 text-brand-1">{{__('Commencez gratuitement dès aujourd\'hui !')}}</h2>
                         <p class="font-sm text-muted mb-30">{{__('Accès à toutes les fonctionnalités. Aucune carte de crédit n\'est requise.')}}</p>
-                        <button class="btn social-login hover-up mb-20"><img
+                        <button onclick="window.location.href='{{route('google.login')}}" class="btn social-login hover-up mb-20"><img
                                 src="{{ asset('assets/imgs/template/icons/icon-google.svg') }}" alt="google"><strong>{{__('S\'inscrire avec Google')}}</strong></button>
                         <div class="divider-text-center"><span>{{__('Ou remplissez ce formulaire')}}</span></div>
                     </div>

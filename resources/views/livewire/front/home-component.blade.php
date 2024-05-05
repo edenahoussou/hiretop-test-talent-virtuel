@@ -1,4 +1,5 @@
 <div>
+{{phpinfo();}}
     <main class="main">
         <div class="bg-homepage4"></div>
         <section class="section-box">
