@@ -10,7 +10,9 @@
 
 # User uploads or assets
 /public/uploads/
-/public/assets/
+
+#composer 
+composer.phar
 
 # Compiled files
 *.{com,class,dll,exe,o,so}
