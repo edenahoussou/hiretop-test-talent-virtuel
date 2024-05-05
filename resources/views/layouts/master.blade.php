@@ -74,6 +74,7 @@
 
     @include('layouts.partials.third-parts-scripts')
     @stack('js')
+    @include('flashy::message')
     @livewireScripts
 </body>
 

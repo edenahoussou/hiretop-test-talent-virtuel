@@ -3,6 +3,7 @@
 
 # Session files
 /storage/framework/sessions/
+/storage/debugbar
 
 # Compiled views or templates
 **/views/**/*.{php,blade.php}  # Include blade.php for Laravel
