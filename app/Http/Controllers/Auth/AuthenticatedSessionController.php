@@ -78,7 +78,7 @@ class AuthenticatedSessionController extends Controller
     {
         $googleUser = Socialite::driver('google')->user();
 
-        $existingUser = User::where('google_id', $googleUser->id)->first();
+        $existingUser = User::where('google_id', $googleUser->email)->first();
 
         try {
             //code...
