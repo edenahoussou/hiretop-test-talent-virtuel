@@ -19,24 +19,37 @@
                             <label class="form-label" for="input-1">{{__('Nom complet')}} *</label>
                             <input class="form-control @error('name') is-invalid @enderror" id="input-1" type="text" required="" name="name"
                                 placeholder="Steven Job">
+
+                            @error('name') <span class="text-danger">{{ $message }}></span> @enderror
                         </div>
-                        @error('name') <span class="text-danger">{{ $message }}></span> @enderror
+
+                        <div class="form-group form-group select-style">
+                            <label class="form-label" for="input-1">{{__('Je suis à la recherche')}} *</label>
+                            <select class="form-control" name="type" id="userType">
+                                <option value="">{{__('Choisir')}}</option>
+                                <option value="candidate">{{__('Emplois / Mission')}}</option>
+                                <option value="company">{{__('Talent')}}</option>
+                            </select>
+                            @error('type') <span class="text-danger">{{ $message }}></span> @enderror
+                        </div>
                         <div class="form-group">
                             <label class="form-label" for="input-2">{{__('Email')}} *</label>
                             <input class="form-control @error('email') is-invalid @enderror" id="input-2" type="email" required="" name="email"
-                                placeholder="stevenjob@gmail.com">
+                                placeholder="edenahoussou@gmail.com">
+                                @error('email') <span class="text-danger">{{ $message }}></span> @enderror
                         </div>
-                        @error('email') <span class="text-danger">{{ $message }}></span> @enderror
 
                         <div class="form-group">
                             <label class="form-label" for="input-4">{{__('Mot de passe')}} *</label>
-                            <input class="form-control" id="input-4" type="password" required="" name="password" autocomplete="new-password"
+                            <input class="form-control @error('password') is-invalid @enderror"  id="input-4" type="password" required="" name="password" autocomplete="new-password"
                                 placeholder="************">
+                                @error('password') <span class="text-danger">{{ $message }}></span> @enderror
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="input-5">{{__('Confirmer le mot de passe')}} *</label>
-                            <input class="form-control" id="input-5" type="password" required="" name="password_confirmation"
+                            <input class="form-control @error('password_confirmation') is-invalid @enderror" id="input-5" type="password" required="" name="password_confirmation"
                                 placeholder="************">
+                                @error('password_confirmation') <span class="text-danger">{{ $message }}></span> @enderror
                         </div>
                         <div class="login_footer form-group d-flex justify-content-between">
                             <label class="cb-container">
