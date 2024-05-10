@@ -27,16 +27,9 @@
                     </li><!-- .nk-menu-item -->
 
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
+                        <a href="{{ route('company.manage-post-job') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-files-fill"></em></span>
-                            <span class="nk-menu-text">{{ __('Créer un nouveau poste') }}</span>
-                        </a>
-                    </li><!-- .nk-menu-item -->
-
-                    <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-files-fill"></em></span>
-                            <span class="nk-menu-text">{{ __('Gestion des postes') }}</span>
+                            <span class="nk-menu-text">{{ __('Gestion des offres d\'emplois') }}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
 
@@ -60,7 +53,7 @@
                         <h6 class="overline-title text-primary-alt">{{__('Gestion de compte')}}</h6>
                     </li><!-- .nk-menu-heading -->
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
+                        <a href="{{ route('company.profile') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb-fill"></em></span>
                             <span class="nk-menu-text">{{__('Présentation de l\'entreprise')}}</span>
                         </a>
