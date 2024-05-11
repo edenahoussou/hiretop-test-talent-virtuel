@@ -56,7 +56,7 @@
                                 </th>
                                 <th class="nk-tb-col"><span class="sub-text">{{__('Titre') }}</span></th>
                                 <th class="nk-tb-col tb-col-xxl"><span class="sub-text">{{__('Niveau')}}</span></th>
-                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Salaire')}}</span></th>
+                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Etape du processus')}}</span></th>
                                 <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Candidatures')}}</span></th>
                                 <th class="nk-tb-col tb-col-xxl"><span class="sub-text">{{__('Status')}}</span></th>
                                 <th class="nk-tb-col tb-col-md"><span class="sub-text">{{('Candidature pertinente')}}</span></th>
@@ -90,7 +90,7 @@
                                     <span>{{ $job->graduation->name }}</span>
                                 </td>
                                 <td class="nk-tb-col tb-col-lg">
-                                    <span>{{ number_format($job->salary, 0, ',', ' ').' '.config('app.currency')  }}</span>
+                                    <span>{{ $job->job_stage }}</span>
                                 </td>
                                 <td class="nk-tb-col tb-col-lg">
                                     <ul class="project-users g-1">

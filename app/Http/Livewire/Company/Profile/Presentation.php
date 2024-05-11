@@ -99,6 +99,6 @@ class Presentation extends Component
         $title = __('Présentation de l\'entreprise');
         $industries = Industry::all();
         $locations = CompanyLocation::all();
-        return view('livewire.company.profile.presentation', compact('industries', 'locations'))->extends('layouts.admin-master', compact('title') )->section('content');;
+        return view('livewire.company.profile.presentation', compact('industries', 'locations'))->extends('layouts.admin-master', compact('title') )->section('content');
     }
 }

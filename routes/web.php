@@ -40,6 +40,7 @@ Route::get('/set-user-role', SetUserRoleComponent::class)->name('select-role')->
 
 Route::get('/dashboard', DashboardComponent::class)->name('dashboard')->middleware(['auth', 'verified','hasRole']);
 
+// add route to get php info
 
 
 require __DIR__ . '/auth.php';
