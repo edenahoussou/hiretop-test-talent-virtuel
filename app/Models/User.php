@@ -26,6 +26,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'google_id',
+        'photo',
+        'slug',
+        'browser',
+        'ip',
+        'phone',
+        'dob',
+        'address',
+        'two_factor',
+        'activity_logs'
     ];
 
     /**
@@ -67,4 +76,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Company::class, 'owner_id');
     }
 
+    public function saveLoginDetails($browser, $ip)
+    {
+        $this->browser = $browser;
+        $this->ip = $ip;
+        $this->save();
+    }
 }

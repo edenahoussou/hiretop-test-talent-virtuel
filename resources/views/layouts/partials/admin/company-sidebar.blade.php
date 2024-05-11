@@ -21,7 +21,7 @@
                     </li><!-- .nk-menu-heading -->
                     <li class="nk-menu-item">
                         <a href="{{ route('dashboard') }}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-growth-fill"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
                             <span class="nk-menu-text">{{ __('Tableau de bord') }}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
@@ -29,13 +29,13 @@
                     <li class="nk-menu-item">
                         <a href="{{ route('company.manage-post-job') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-files-fill"></em></span>
-                            <span class="nk-menu-text">{{ __('Gestion des offres d\'emplois') }}</span>
+                            <span class="nk-menu-text">{{ __('Offres d\'emplois') }}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
 
                     <li class="nk-menu-item">
                         <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-files-fill"></em></span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-chat-fill"></em></span>
                             <span class="nk-menu-text">{{ __('Messages') }}</span> <span class="nk-menu-badge">2</span> </span>
                         </a>
                     </li><!-- .nk-menu-item -->
@@ -43,9 +43,9 @@
                     
 
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-files-fill"></em></span>
-                            <span class="nk-menu-text">{{ __('Gestion des candidatures') }}</span>
+                        <a href="{{ route('company.applicants') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
+                            <span class="nk-menu-text">{{ __('Candidats') }}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
 
@@ -54,23 +54,23 @@
                     </li><!-- .nk-menu-heading -->
                     <li class="nk-menu-item">
                         <a href="{{ route('company.profile') }}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb-fill"></em></span>
-                            <span class="nk-menu-text">{{__('Présentation de l\'entreprise')}}</span>
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">{{__('Mon Entreprise')}}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
 
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb-fill"></em></span>
-                            <span class="nk-menu-text">{{__('Mon profil')}}</span>
+                        <a href="{{ route('company.owner.profile') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-account-setting-fill"></em></span>
+                            <span class="nk-menu-text">{{__('Profil utilisateur')}}</span>
                         </a>
                     </li><!-- .nk-menu-item -->
 
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-tile-thumb-fill"></em></span>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-signout"></em></span>
                             <span class="nk-menu-text">{{__('Déconexion')}}</span>
-                        </a>
+                        </a>    
                     </li><!-- .nk-menu-item -->
                     
                 </ul><!-- .nk-menu -->

@@ -6,7 +6,7 @@ use App\Models\JobPost;
 use Livewire\Component;
 use MercurySeries\Flashy\Flashy;
 
-class JobPosts extends Component
+class JobPostsList extends Component
 {
     public $perPage = 50, $search = '';
 
@@ -15,6 +15,8 @@ class JobPosts extends Component
         'expired' => 'bg-danger',
         'active' => 'bg-warning',
     ];
+
+    protected $listeners = ['refreshJobsPostsList' => '$refresh']; 
 
     public function badgeStatus($days)
     {
@@ -34,16 +36,12 @@ class JobPosts extends Component
 
         if(auth()->user()->company == null) {
 
-                Flashy::message('Veuillez completer votre profil entreprise pour gérer vos offres d\'emploi');
-
-                // $this->redirect(route('dashboard'));
-            
+            $this->dispatchBrowserEvent('success-message', [
+                'message' => __('Vous devez d\'abord ajouter votre entreprise ! pour ajouter une offre d\'emploi'),
+            ]);            
             $jobs = [];
         }
         else {
-            $this->dispatchBrowserEvent('success-message', [
-                'message' => __('Vos offres d\'emploi'),
-            ]);
             
             $jobs = JobPost::with('company', 'graduation','graduation')
                             ->where('company_id', auth()->user()->company->id)

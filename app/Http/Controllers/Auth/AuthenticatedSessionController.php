@@ -35,6 +35,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $ipAddress = request()->ip();
+        $browser = request()->header('user-agent');
+
+        $user = Auth::user();
+
+        $user->saveLoginDetails($browser, $ipAddress);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -85,6 +92,11 @@ class AuthenticatedSessionController extends Controller
             if ($existingUser) {
 
                 Auth::login($existingUser, true);
+                $browser = request()->header('user-agent');
+
+                $ipAddress = request()->ip();
+
+                $existingUser->saveLoginDetails($browser, $ipAddress);
     
             } else {
                 
@@ -96,6 +108,12 @@ class AuthenticatedSessionController extends Controller
                 ]);
     
                 Auth::login($user, true);
+                
+                $browser = request()->header('user-agent');
+
+                $ipAddress = request()->ip();
+
+                $user->saveLoginDetails($browser, $ipAddress);
     
             }
     

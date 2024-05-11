@@ -16,11 +16,11 @@
                                 <a class="nav-link active" data-bs-toggle="tab" href="#tabItem5"><em
                                         class="icon ni ni-laptop"></em><span>{{('Mon entreprise')}}</span></a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#tabItem8"><em
                                         class="icon ni ni-user"></em><span>{{('Mon profil')}} </span>
                                 </a>
-                            </li>
+                            </li> --}}
                             
                         </ul>
                         <div class="card-inner">
@@ -225,7 +225,7 @@
                                     </form>
                                 </div>
                                 <!--tab pan -->
-                                <div class="tab-pane" id="tabItem8">
+                                {{-- <div class="tab-pane" id="tabItem8">
                                     <div class="nk-block-head">
                                         <div class="nk-block-head-content">
                                             <h4 class="title nk-block-title">Theme Installed</h4>
@@ -269,7 +269,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                             </div>
                         </div>

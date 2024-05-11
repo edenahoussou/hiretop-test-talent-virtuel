@@ -1,6 +1,6 @@
 <div>
     {{-- resources/views/livewire/company/post/add-new-job-post.blade.php --}}
-        @livewire('company.post.add-new-job-post')
+        @livewire('company.post.job-post-component')
     {{-- resources/views/livewire/company/post/add-new-job-post.blade.php --}}
     <div class="container-fluid">
         <div class="nk-content-inner">
@@ -56,21 +56,15 @@
                                 </th>
                                 <th class="nk-tb-col"><span class="sub-text">{{__('Titre') }}</span></th>
                                 <th class="nk-tb-col tb-col-xxl"><span class="sub-text">{{__('Niveau')}}</span></th>
-                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Salaire')}}</span></th>
+                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Etape du processus')}}</span></th>
                                 <th class="nk-tb-col tb-col-lg"><span class="sub-text">{{__('Candidatures')}}</span></th>
                                 <th class="nk-tb-col tb-col-xxl"><span class="sub-text">{{__('Status')}}</span></th>
                                 <th class="nk-tb-col tb-col-md"><span class="sub-text">{{('Candidature pertinente')}}</span></th>
                                 <th class="nk-tb-col tb-col-sm"><span class="sub-text">{{__('Deadline')}}</span></th>
                                 <th class="nk-tb-col nk-tb-col-tools text-end">
                                     <div class="dropdown">
-                                        <a href="#" class="btn btn-xs btn-trigger btn-icon dropdown-toggle me-n1" data-bs-toggle="dropdown" data-offset="0,5"><em class="icon ni ni-more-h"></em></a>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <ul class="link-list-opt no-bdr">
-                                                <li><a href="#"><em class="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-archive"></em><span>Mark As Archive</span></a></li>
-                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Remove Projects</span></a></li>
-                                            </ul>
-                                        </div>
+                                        <a href="#" class="btn btn-xs btn-trigger btn-icon dropdown-toggle me-n1" data-offset="0,5"><em class="icon ni ni-more-h"></em></a>
+                                        
                                     </div>
                                 </th>
                             </tr><!-- .nk-tb-item -->
@@ -96,7 +90,7 @@
                                     <span>{{ $job->graduation->name }}</span>
                                 </td>
                                 <td class="nk-tb-col tb-col-lg">
-                                    <span>{{ number_format($job->salary, 0, ',', ' ').' '.config('app.currency')  }}</span>
+                                    <span>{{ $job->job_stage }}</span>
                                 </td>
                                 <td class="nk-tb-col tb-col-lg">
                                     <ul class="project-users g-1">
@@ -116,7 +110,7 @@
                                     <span class="badge badge-dim {{ $job->status == 'publish' ? 'bg-success' : 'bg-warning' }}">{{$job->status}}</span>
                                 </td>
                                 <td class="nk-tb-col tb-col-md">
-                                    <div class="project-list-progress">
+                                    <div class="project-list-progress" wire:ignore>
                                         <div class="progress progress-pill progress-md bg-light">
                                             <div class="progress-bar" data-progress="93.5"></div>
                                         </div>
@@ -133,9 +127,9 @@
                                                 <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
-                                                        <li><a href="html/apps-kanban.html"><em class="icon ni ni-eye"></em><span>View Project</span></a></li>
-                                                        <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit Project</span></a></li>
-                                                        <li><a href="#"><em class="icon ni ni-check-round-cut"></em><span>Mark As Done</span></a></li>
+                                                        <li><a href="html/apps-kanban.html"><em class="icon ni ni-eye"></em><span>{{__('Voir les candidatures')}}</span></a></li>
+                                                        <li><a wire:click="$emit('editJob', {{ $job->id }})" href="#"><em class="icon ni ni-edit"></em><span>{{__('Modifier') }}</span></a></li>
+                                                        <li><a href="#"><em class="icon ni ni-close"></em><span>{{__('Annuler') }}</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -150,46 +144,26 @@
                     <div class="card">
                         <div class="card-inner">
                             <div class="nk-block-between-md g-3">
-                                <div class="g">
-                                    <ul class="pagination justify-content-center justify-content-md-start">
-                                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
-                                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                    </ul><!-- .pagination -->
-                                </div>
-                                <div class="g">
-                                    <div class="pagination-goto d-flex justify-content-center justify-content-md-start gx-3">
-                                        <div>Page</div>
-                                        <div>
-                                            <select class="form-select js-select2" data-search="on" data-dropdown="xs center">
-                                                <option value="page-1">1</option>
-                                                <option value="page-2">2</option>
-                                                <option value="page-4">4</option>
-                                                <option value="page-5">5</option>
-                                                <option value="page-6">6</option>
-                                                <option value="page-7">7</option>
-                                                <option value="page-8">8</option>
-                                                <option value="page-9">9</option>
-                                                <option value="page-10">10</option>
-                                                <option value="page-11">11</option>
-                                                <option value="page-12">12</option>
-                                                <option value="page-13">13</option>
-                                                <option value="page-14">14</option>
-                                                <option value="page-15">15</option>
-                                                <option value="page-16">16</option>
-                                                <option value="page-17">17</option>
-                                                <option value="page-18">18</option>
-                                                <option value="page-19">19</option>
-                                                <option value="page-20">20</option>
-                                            </select>
+                                {{ $jobs->links() }}
+                                @if ($jobs->total() / $jobs->perPage() > 1)
+                                    <div class="g" wire:ignore>
+                                        <div
+                                            class="pagination-goto d-flex justify-content-center justify-content-md-start gx-3">
+                                            <div>Page</div>
+                                            <div>
+                                                <select id="pagination-goto"
+                                                    class="form-select form-select-sm js-select2"
+                                                    data-search="on" data-dropdown="xs center">
+                                                    @for ($i = 1; $i <= ceil($jobs->total() / $users->perPage()); $i++)
+                                                        <option value="{{ $i }}">
+                                                            {{ $i }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                            <div>OF {{ ceil($jobs->total() / $users->perPage()) }}</div>
                                         </div>
-                                        <div>OF 102</div>
-                                    </div>
-                                </div><!-- .pagination-goto -->
+                                    </div><!-- .pagination-goto -->
+                                @endif
                             </div><!-- .nk-block-between -->
                         </div><!-- .card-inner -->
                     </div><!-- .card -->
