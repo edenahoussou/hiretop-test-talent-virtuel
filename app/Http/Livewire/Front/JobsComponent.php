@@ -8,6 +8,8 @@ class JobsComponent extends Component
 {
     public function render()
     {
+        $title = __('Candidats');
+
         return view('livewire.front.jobs-component');
     }
 }

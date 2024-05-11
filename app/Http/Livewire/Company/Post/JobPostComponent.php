@@ -71,7 +71,7 @@ class JobPostComponent extends Component
                 'status' => $this->status,
                 'posted_by_id' => auth()->user()->id,
                 'company_id' => auth()->user()->company->id,
-                'job_stage' => 'new',
+                'job_stage' => 'candidature',
             ]);
     
            $this->dispatchBrowserEvent('success-message', [
@@ -81,7 +81,7 @@ class JobPostComponent extends Component
            $this->reset();
 
            $this->dispatchBrowserEvent('close-modal');
-           
+
            $this->emit('refreshJobsPostsList');
 
         } catch (\Throwable $th) {
