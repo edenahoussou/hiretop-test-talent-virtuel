@@ -16,7 +16,7 @@ use App\Http\Livewire\Message;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','role:Entreprise'] ], function () {
 
     Route::prefix('company')->name('company.')->group(function () {
         

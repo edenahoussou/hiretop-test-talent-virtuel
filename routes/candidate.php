@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','role:Talent']], function () {
 
     Route::prefix('candidate')->name('candidate.')->group(function () {
 
