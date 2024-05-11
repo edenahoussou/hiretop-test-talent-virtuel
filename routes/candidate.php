@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Candidate\AlertJobs;
 use App\Http\Livewire\Candidate\AppliedJobs;
 use App\Http\Livewire\Candidate\Resume;
 use App\Http\Livewire\Message;
@@ -28,5 +29,7 @@ Route::group(['middleware' => ['auth','role:Talent']], function () {
         Route::get('profile', OwnerProfil::class)->name('profile');
         
         Route::get('applied-jobs', AppliedJobs::class)->name('applied-jobs');
+
+        Route::get('jobs-recommendations', AlertJobs::class)->name('recommendations');
     });
 });
