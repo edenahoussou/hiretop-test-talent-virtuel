@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\CompanyLocation;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GraduationsSeeder::class);
         $this->call(ExperienceLevelsSeeder::class);
         $this->call(IndustriesSeeder::class);
+        $this->call(SkillSeeder::class);
 
     }
 }
