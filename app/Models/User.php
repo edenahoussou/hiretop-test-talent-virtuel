@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Company;
+use App\Models\Candidat;
 use Spatie\Sluggable\HasSlug;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Sluggable\SlugOptions;
@@ -81,5 +82,15 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->browser = $browser;
         $this->ip = $ip;
         $this->save();
+    }
+
+    public function candidat()
+    {
+        return $this->hasOne(Candidat::class, 'user_id');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
     }
 }

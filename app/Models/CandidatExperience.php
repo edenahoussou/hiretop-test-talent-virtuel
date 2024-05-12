@@ -10,6 +10,7 @@ class CandidatExperience extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $table = 'candidat_experience';
 
     public function candidat()
     {
