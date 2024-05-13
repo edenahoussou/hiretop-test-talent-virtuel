@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Skill;
+use App\Models\JobPost;
 use App\Models\Graduation;
 use App\Models\CandidatExperience;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +39,13 @@ class Candidat extends Model
     public function experiences()
     {
         return $this->hasMany(CandidatExperience::class);
+    }
+
+    public function jobs()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_post_candidates', 'candidate_id', 'job_post_id')
+                    ->withPivot('created_at', 'updated_at','slug', 'candidate_status','cover_letter', 'resume', 'review','disqualification_reason','deleted_at')
+                    ->withTimestamps();
     }
 
 

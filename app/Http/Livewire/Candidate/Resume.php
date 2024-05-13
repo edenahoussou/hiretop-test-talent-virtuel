@@ -3,15 +3,17 @@
 namespace App\Http\Livewire\Candidate;
 
 use App\Models\Candidat;
+use App\Models\CandidatExperience;
 use App\Models\Graduation;
 use App\Models\Skill;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Resume extends Component
 {
-    public $userSkills = [], $selectedEducation, $address, $user, $name, $email, $phone, $about, $experiences, $graduations ,$jobTitle, $photo, $newEducation = [], $newExperience = [];
+    public $userSkills = [], $selectedEducation, $selectedExperience, $address, $user, $name, $email, $phone, $about, $experiences, $graduations ,$jobTitle, $photo, $newEducation = [], $newExperience = [];
 
     protected $listeners = ['refreshCv' => '$refresh'];
     
@@ -34,7 +36,55 @@ class Resume extends Component
 
     public function addExperience()
     {
-        
+        $this->validate([
+            'newExperience.position' => 'required|max:255',
+            'newExperience.company' => 'required',
+            'newExperience.description' => 'nullable',
+            'newExperience.from' => 'required|date',
+            'newExperience.to' => 'required|date|after:from',
+            'newExperience.proof' => 'required|file|mimes:pdf,jpg,png|max:20048',
+        ]);
+
+        //dd($this->newExperience);
+
+
+        try {
+            DB::beginTransaction();
+            Candidat::UpdateOrCreate(
+                ['user_id' => $this->user->id],
+                [
+                    'about' => $this->about,
+                    'job_title' => $this->jobTitle,
+                    'location' => $this->address,
+                ]
+            );
+
+            $this->user->candidat->experiences()->create([
+                'position' => $this->newExperience['position'],
+                'company' => $this->newExperience['company'],
+                'description' => $this->newExperience['description'],
+                'start_date' => $this->newExperience['from'],
+                'end_date' => $this->newExperience['to'],
+            ]);
+
+            $latestExperience = $this->user->candidat->experiences->sortByDesc('created_at')->first();
+            if ($latestExperience && $this->newExperience['proof']) {
+                $latestExperience->update([
+                    'proof' => $this->newExperience['proof']->store('candiates/certificates', 'public'),
+                ]);
+            }
+            DB::commit();
+            $this->dispatchBrowserEvent('success-message', ['message' => 'Expérience ajoutée avec succès']);
+            $this->dispatchBrowserEvent('close-resume-modal');
+
+            $this->newExperience = [];
+            $this->emit('refreshCv');
+
+        } catch (\Exception $e) {
+            $this->dispatchBrowserEvent('error-message', ['message' => 'Une erreur est survenue ' . $e->getMessage()]);
+            DB::rollBack();
+
+        }
     }
 
     public function saveCandidate()
@@ -50,6 +100,7 @@ class Resume extends Component
         ]);
         //dd($this->name, $this->email, $this->about, $this->jobTitle, $this->address, $this->photo, $this->userSkills);
 
+        DB::beginTransaction();
         try {
             Candidat::UpdateOrCreate(['user_id' => $this->user->id], 
             [
@@ -68,8 +119,10 @@ class Resume extends Component
 
             $this->dispatchBrowserEvent('success-message', ['message' => 'Informations sauvegardées avec succès']);
             $this->emit('refreshCv');
+            DB::commit();
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('error-message', ['message' => 'Une erreur est survenue '.$th->getMessage()]);
+            DB::rollBack();
         }
     }
 
@@ -84,7 +137,7 @@ class Resume extends Component
             'newEducation.proof' => 'required|file|mimes:pdf,jpg,png|max:20048',
             'newEducation.school' => 'required',
         ]);
-        
+        DB::beginTransaction();
         try {
             Candidat::UpdateOrCreate(['user_id' => $this->user->id], 
             [
@@ -107,11 +160,13 @@ class Resume extends Component
             $this->emit('refreshCv');
             $this->dispatchBrowserEvent('success-message', ['message' => 'Formation ajoutée avec succès']);
             $this->newEducation = [];
-            $this->dispatchBrowserEvent('close-education-modal');
+            DB::commit();
+            $this->dispatchBrowserEvent('close-resume-modal');
 
         } catch (\Throwable $th) {
             // dd($th->getMessage());
             $this->dispatchBrowserEvent('error-message', ['message' => 'Une erreur est survenue '.$th->getMessage()]);
+            DB::rollBack();
         }
     }
 
@@ -120,7 +175,15 @@ class Resume extends Component
         $this->user->candidat->graduations()->detach($this->selectedEducation);
         $this->emit('refreshCv');
         $this->dispatchBrowserEvent('success-message', ['message' => 'Formation supprimée avec succès']);
-        $this->dispatchBrowserEvent('close-education-modal');
+        $this->dispatchBrowserEvent('close-resume-modal');
+    }
+
+    public function deleteExperience()
+    {
+        CandidatExperience::destroy($this->selectedExperience);
+        $this->emit('refreshCv');
+        $this->dispatchBrowserEvent('success-message', ['message' => 'Expérience supprimée avec succès']);
+        $this->dispatchBrowserEvent('close-resume-modal');
     }
     public function render()
     {

@@ -21,7 +21,7 @@
                                             {{__('Photo de profil')}}
                                         </div>
                                         <div>
-                                            <img src="{{ Storage::url(auth()->user()->photo) ? : 'https://ui-avatars.com/api/?name=' . auth()->user()->name }}" width="150" height="150" class="rounded-circle" alt="profile image">
+                                            <img src="{{ Storage::url(auth()->user()->photo) ?? 'https://ui-avatars.com/api/?name=' . auth()->user()->name }}" width="150" height="150" class="rounded-circle" alt="profile image">
                                             <div id="divPhoto">
                                                 <input type="file" name="photo" wire:model='photo' id="photo">
                                             </div>
@@ -101,24 +101,30 @@
                     </div>
                     <!--.nk-block -->
                     <div class="card">
-                        <div class="card-header bg-dark">{{__('Formations')}}</div>
+                        <div class="card-header bg-dark text-white">{{__('Formations')}}</div>
                         @forelse($educations as $key => $education)
                         <div class="card-inner" id="education{{$education->id}}">
-                            <div class="card-action d-flex justify-content-end">
-                                <a class="btn btn-danger btn-sm"
-                                    wire:click='$set("selectedEducation",{{ $education->id }})' data-bs-toggle="modal"
-                                    href="#modalDeleteEducation">
+                            <div class="card-action d-flex justify-content-between">
+                                <a title="Modifier" href="#" wire:click='$set("selectedEducation",{{ $education->id }})' data-bs-toggle="modal" 
+                                    data-bs-target="#modalEditEducation" class="btn btn-round btn-icon btn-lg btn-primary">
+                                    <em class="icon ni ni-edit"></em>
+                                </a>
+
+                                <a href="#" title="Supprimer"  wire:click='$set("selectedEducation",{{ $education->id }})'
+                                    data-bs-toggle="modal" data-bs-target="#modalDeleteEducation" class="btn btn-round btn-icon btn-lg btn-danger">
                                     <em class="icon ni ni-trash"></em>
                                 </a>
+                               
                             </div>
 
-                            <div class="row gy-4">
+                            <div class="row gy-4 mt-3">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="form-label"
                                             for="fullname{{$education->id}}">{{__('Diplome')}}</label>
                                         <div class="form-control-wrap">
-                                            <select class="form-select js-select2" id="grade{{$education->id}}">
+                                            <select class="form-select js-select2" id="grade{{$education->id}}"
+                                                disabled>
                                                 <option value="default_option">{{__('Choissisez')}}</option>
                                                 @foreach($grades as $key => $grade)
                                                 <option @if($education->pivot->graduation_level_id == $grade->id)
@@ -134,7 +140,7 @@
                                         <label class="form-label" for="degree{{$education->id}}">{{__('Qualification ou
                                             Titre de la formation')}}</label>
                                         <input type="text" class="form-control" value="{{ $education->pivot->degree }}"
-                                            id="title{{$education->id}}" placeholder="Ex: BTS SIO">
+                                            id="title{{$education->id}}" placeholder="Ex: BTS SIO" readonly>
                                     </div>
                                 </div>
 
@@ -145,17 +151,18 @@
                                             formation')}}</label>
                                         <input type="text" class="form-control"
                                             value="{{ $education->pivot->university }}" id="school{{$education->id}}"
-                                            placeholder="Ex: Ecole Supérieure de Technologie">
+                                            placeholder="Ex: Ecole Supérieure de Technologie" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="row gy-4 mt-3">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="from{{$education->id}}">{{__('Début')}}</label>
+                                        <label class="form-label" for="from{{$education->id}}">{{__('Debut')}}</label>
                                         <div class="form-control-wrap">
-                                            <input type="date" class="form-control" id="from{{$education->id}}"
-                                                placeholder="2020" value="{{ $education->pivot->start_date }}">
+                                            <input type="date" class="form-control"
+                                                value="{{ $education->pivot->start_date }}" id="from{{$education->id}}"
+                                                placeholder="2020" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -163,8 +170,9 @@
                                     <div class="form-group">
                                         <label class="form-label" for="to{{$education->id}}">{{__('Fin')}}</label>
                                         <div class="form-control-wrap">
-                                            <input type="date" class="form-control" id="to{{$education->id}}"
-                                                placeholder="2020" value="{{ $education->pivot->end_date }}">
+                                            <input type="date" class="form-control"
+                                                value="{{ $education->pivot->end_date }}" id="to{{$education->id}}"
+                                                placeholder="2020" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +182,7 @@
                                         <label class="form-label" for="degree_proof">{{__('Uploader le
                                             document')}}</label>
                                         <div class="form-control-wrap">
-                                            <input type="file" class="form-control" id="degree_proof">
+                                            <input type="file" class="form-control" id="degree_proof" disabled>
                                         </div>
                                     </div>
                                     @if ($education->pivot->degree_proof)
@@ -201,7 +209,8 @@
                                         <label class="form-label"
                                             for="description{{$education->id}}">{{__('Description')}}</label>
                                         <div class="form-control-wrap">
-                                            <textarea class="form-control" id="description{{$education->id}}"
+                                            <textarea class="form-control"
+                                                style="pointer-events: none; opacity: 0.5;" id="description{{$education->id}}"
                                                 rows="5">{{ $education->pivot->description }}</textarea>
                                         </div>
                                     </div>
@@ -225,6 +234,119 @@
                                     class="icon ni ni-plus"></em><span>{{__('Ajouter')}}</span> </a>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-header bg-indigo text-white">{{__('Experiences Professionnelles')}}</div>
+                        @forelse($experiences as $key => $experience)
+                        <div class="card-inner" id="education{{$experience->id}}">
+                            <div class="card-action d-flex justify-content-between">
+                                <a title="Modifier" href="#" wire:click="$set('selectedExperience', {{ $experience->id }})" data-bs-toggle="modal" 
+                                    data-bs-target="#modalEditExperience" class="btn btn-round btn-icon btn-lg btn-primary">
+                                    <em class="icon ni ni-edit"></em>
+                                </a>
+
+                                <a href="#" title="Supprimer"  wire:click="$set('selectedExperience', {{ $experience->id }})"
+                                    data-bs-toggle="modal" data-bs-target="#modalDeleteExperience" class="btn btn-round btn-icon btn-lg btn-danger">
+                                    <em class="icon ni ni-trash"></em>
+                                </a>
+                               
+                            </div>
+                            
+                            <div class="row gy-4 mt-3">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="position{{$experience->id}}">{{__('Poste \ Fonction')}}</label>
+                                        <input type="text" class="form-control" readonly value="{{ $experience->position }}" id="position{{$experience->id}}"
+                                            placeholder="Ex: Comptable">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="company{{$experience->id}}">{{__('Entreprise')}}</label>
+                                        <input type="text" class="form-control" readonly value="{{ $experience->company }}"
+                                            id="company{{$experience->id}}" placeholder="Ex: Google">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="exp_start{{$experience->id}}">{{__('Début de cette
+                                            experience')}}</label>
+                                        <input type="date" class="form-control" readonly value="{{ $experience->start_date }}"
+                                            id="exp_start{{$education->id}}" placeholder="2020">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gy-4 mt-3">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="exp_end_at{{$experience->id}}">{{__('Date de fin')}}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="date" class="form-control" readonly value="{{ $experience->end_date }}"
+                                                id="exp_end_at{{$experience->id}}" placeholder="2020">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col md-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="exp_proof{{$experience->id}}">{{__('Uploader l\'attestation')}}</label>
+                                        <div class="form-control-wrap">
+                                            <input type="file" id="exp_proof{{$experience->id}}" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                    @if ($experience->proof)
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">{{__('Attestation ou diplome de cete experience')}}</label>
+                                            <div class="form-control-wrap d-flex align-items-center">
+                                                <a href="{{ Storage::url($experience->proof) }}"
+                                                    class="btn btn-primary"
+                                                    download="{{ $experience->proof}}">
+                                                    {{__('Télécharger le document')}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row gy-4">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="form-label"
+                                            for="exp_description{{$experience->id}}">{{__('Description')}}</label>
+                                        <div class="form-control-wrap">
+                                            <textarea class="form-control" readonly rows="5"
+                                                id="exp_description{{$experience->id}}">{{$experience->description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-5" />
+
+                        @empty
+                        <div class="card-inner">
+                            <div class="alert alert-fill alert-icon alert-gray" role="alert">
+                                <em class="icon ni ni-alert-circle"></em>
+                                <strong>{{__('Aucune expérience professionelle trouvées')}}</strong>.
+                                {{('Ajouter une experience en cliquant sur le bouton ci dessous')}}.
+                            </div>
+                        </div>
+                        @endforelse
+
+                        <div class="card-footer border-top text-muted">
+                            <a href="#modalAddExperience" data-bs-toggle="modal" class="btn btn-round btn-primary"><em
+                                    class="icon ni ni-plus"></em><span>{{__('Ajouter')}}</span> </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -363,12 +485,265 @@
             </div>
         </div>
     </div>
+
+    <div wire:ignore.self class="modal fade" id="modalAddExperience" tabindex="-1"
+        aria-labelledby="modalAddExperienceLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddExperienceLabel">{{__('Ajouter une experience')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gy-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="newExperience.position">{{__('Poste')}}</label>
+                                <input required type="text" class="form-control @error('newExperience.position') is-invalid @enderror"
+                                    id="newExperience.position" wire:model="newExperience.position" />
+                                @error('newExperience.position')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="newExperience.company">{{__('Entreprise')}}</label>
+                                <input required type="text" class="form-control @error('newExperience.company') is-invalid @enderror"
+                                    id="newExperience.company" wire:model="newExperience.company" />
+                                @error('newExperience.company')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="newExperience.from">{{__('Début')}}</label>
+                                <div class="form-control-wrap">
+                                    <input required type="date" class="form-control @error('newExperience.from') is-invalid @enderror"
+                                        id="newExperience.from" wire:model="newExperience.from" />
+                                </div>
+                                @error('newExperience.from')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="newExperience.to">{{__('Fin')}}</label>
+                                <div class="form-control-wrap">
+                                    <input type="date" required class="form-control @error('newExperience.to') is-invalid @enderror"
+                                        id="newExperience.to" wire:model="newExperience.to" />
+                                </div>
+                                @error('newExperience.to')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="exp_proof">{{__('Uploader le document')}}</label>
+                                <div class="form-control-wrap">
+                                    <input required type="file" accept=".pdf"
+                                        class="form-control @error('newExperience.proof') is-invalid @enderror"
+                                        id="degree_proof" wire:model="newExperience.proof">
+                                    @error('newExperience.proof')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label" for="about">{{__('Description')}}</label>
+                                <div class="form-control-wrap">
+                                    <textarea
+                                        class="form-control @error('newExperience.description') is-invalid @enderror"
+                                        id="about" rows="5" wire:model="newExperience.description"></textarea>
+                                    @error('newExperience.description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-primary">{{__('Annuler')}}</button>
+                    <button wire:click="addExperience" type="button"
+                        class="btn btn-success">{{__('Enregistrer')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDeleteExperience" tabindex="-1" aria-labelledby="modalDeleteExperienceLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteExperienceLabel">{{__('Supprimer une Experience')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{__('Voulez-vous vraiment supprimer cette experience ?')}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{__('Annuler')}}</button>
+                    <button wire:click="deleteExperience" type="button" class="btn btn-danger">{{__('Supprimer')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <div class="modal fade" id="modalEditEducation" tabindex="-1" aria-labelledby="modalEditEducationLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditEducationLabel">{{__('Modifier une Formation')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form wire:submit.prevent="updateEducation">
+                    <div class="modal-body">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Nom de l\'institution')}}</label>
+                                    <input type="text" wire:model="selectedEducation.company"
+                                        class="form-control @error('selectedEducation.company') is-invalid @enderror">
+                                    @error('selectedEducation.institution')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Titre de la formation')}}</label>
+                                    <input type="text" wire:model="selectedEducation.title"
+                                        class="form-control @error('selectedEducation.title') is-invalid @enderror">
+                                    @error('selectedEducation.title')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Date de fin')}}</label>
+                                    <input type="date" wire:model="selectedEducation.endDate"
+                                        class="form-control @error('selectedEducation.endDate') is-invalid @enderror">
+                                    @error('selectedEducation.endDate')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Description')}}</label>
+                                    <textarea
+                                        class="form-control @error('selectedEducation.description') is-invalid @enderror"
+                                        id="about" rows="5" wire:model="selectedEducation.description"></textarea>
+                                    @error('editingEducation.description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                            data-bs-dismiss="modal">{{__('Annuler')}}</button>
+                        <button wire:click="updateEducation" type="submit"
+                            class="btn btn-success">{{__('Enregistrer')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditExperience" tabindex="-1" aria-labelledby="modalEditExperienceLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditExperienceLabel">{{__('Modifier une Experience')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form wire:submit.prevent="updateExperience">
+                    <div class="modal-body">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Entreprise')}}</label>
+                                    <input type="text" wire:model="editingExperience.company"
+                                        class="form-control @error('editingExperience.company') is-invalid @enderror">
+                                    @error('editingExperience.company')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Titre')}}</label>
+                                    <input type="text" wire:model="editingExperience.title"
+                                        class="form-control @error('editingExperience.title') is-invalid @enderror">
+                                    @error('editingExperience.title')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Date de debut')}}</label>
+                                    <input type="date" wire:model="editingExperience.startDate"
+                                        class="form-control @error('editingExperience.startDate') is-invalid @enderror">
+                                    @error('editingExperience.startDate')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Date de fin')}}</label>
+                                    <input type="date" wire:model="editingExperience.endDate"
+                                        class="form-control @error('editingExperience.endDate') is-invalid @enderror">
+                                    @error('editingExperience.endDate')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">{{__('Description')}}</label>
+                                    <textarea
+                                        class="form-control @error('editingExperience.description') is-invalid @enderror"
+                                        id="about" rows="5" wire:model="editingExperience.description"></textarea>
+                                    @error('editingExperience.description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                            data-bs-dismiss="modal">{{__('Annuler')}}</button>
+                        <button wire:click="updateExperience" type="submit"
+                            class="btn btn-success">{{__('Enregistrer')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> --}}
 </div>
 @push('js')
 <script>
-    window.addEventListener('close-education-modal', event => {
+    window.addEventListener('close-resume-modal', event => {
             $('#modalAddEducation').modal('hide');
             $('#modalDeleteEducation').modal('hide');
+            $('#modalDeleteExperience').modal('hide');
+            $('#modalAddExperience').modal('hide');
 
         });
 
