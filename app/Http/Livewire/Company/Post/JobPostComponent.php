@@ -7,13 +7,14 @@ use Livewire\Component;
 use App\Models\Graduation;
 use App\Models\CompanyLocation;
 use App\Models\ExperienceLevel;
+use App\Models\JobCategory;
 use App\Models\JobPost;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Date;
 
 class JobPostComponent extends Component
 {
-    public $date, $title, $jobTitle, $job, $jobDescription, $jobType, $graduation, $location_id, $salary, $jobExperience, $status, $closingDate;
+    public $jobCategory, $date, $title, $jobTitle, $job, $jobDescription, $jobType, $graduation, $location_id, $salary, $jobExperience, $status, $closingDate;
 
     protected $messages = [
         'required' => 'Ce champ est requis',
@@ -56,6 +57,7 @@ class JobPostComponent extends Component
             'jobExperience' => 'required|exists:App\Models\ExperienceLevel,id',
             'closingDate' => 'required|date|after:tomorrow',
             'status' => 'required',
+            'jobCategory'=> 'required|exists:App\Models\JobCategory,id',
         ]);
 
         try {
@@ -72,6 +74,7 @@ class JobPostComponent extends Component
                 'posted_by_id' => auth()->user()->id,
                 'company_id' => auth()->user()->company->id,
                 'job_stage' => 'candidature',
+                'job_category_id' => $this->jobCategory,
             ]);
     
            $this->dispatchBrowserEvent('success-message', [
@@ -114,6 +117,7 @@ class JobPostComponent extends Component
             $this->closingDate = $job->closing_date;
             $this->status = $job->status;
             $this->job = $job;
+            $this->jobCategory = $job->job_category_id;
             
             $this->dispatchBrowserEvent('open-modal', ['jobDescription' => $job->description]);
         }
@@ -136,6 +140,7 @@ class JobPostComponent extends Component
             'jobExperience' => 'required|exists:App\Models\ExperienceLevel,id',
             'closingDate' => 'required|date|after:tomorrow',
             'status' => 'required',
+            'jobCategory'=> 'required|exists:App\Models\JobCategory,id',
         ]);
 
         try {
@@ -149,6 +154,7 @@ class JobPostComponent extends Component
                 'experience_level_id' => $this->jobExperience,
                 'closing_date' => Carbon::parse($this->closingDate),
                 'status' => $this->status,
+                'job_category_id' => $this->jobCategory,
             ]);
 
            $this->dispatchBrowserEvent('success-message', [
@@ -180,7 +186,8 @@ class JobPostComponent extends Component
         $locations = CompanyLocation::all();
         $experiences = ExperienceLevel::all();
         $graduations = Graduation::all();
+        $categories = JobCategory::all();
 
-        return view('livewire.company.post.job-post-component', compact('jobTypes', 'locations', 'experiences', 'graduations') );
+        return view('livewire.company.post.job-post-component', compact('jobTypes', 'locations', 'experiences', 'graduations', 'categories') );
     }
 }
