@@ -9,6 +9,7 @@ use App\Http\Livewire\Front\ContactComponent;
 use App\Http\Livewire\Admin\DashboardComponent;
 use App\Http\Livewire\Front\CompaniesComponent;
 use App\Http\Livewire\Front\CandidatesComponent;
+use App\Http\Livewire\Front\JobDetailsComponent;
 use App\Http\Livewire\Front\SetUserRoleComponent;
 
 /*
@@ -26,7 +27,9 @@ Route::get('/', HomeComponent::class)->name('home');
 
 Route::get('/contact', ContactComponent::class)->name('contact');
 
-Route::get('/jobs', JobsComponent::class)->name('jobs');
+Route::get('/jobs/{search_terms?}/{selectedIndustry?}/{selectedLocation?}', JobsComponent::class)->name('jobs');
+
+Route::get('/job/{slug}/details',JobDetailsComponent::class)->name('job.details');
 
 Route::get('/candidates', CandidatesComponent::class)->name('candidates');
 

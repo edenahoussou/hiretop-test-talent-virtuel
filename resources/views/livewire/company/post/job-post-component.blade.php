@@ -40,6 +40,22 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
+                                    <label class="form-label" for="job-category">{{('Categories')}}</label>
+                                    <div class="form-control-wrap">
+                                        <select wire:model.defer="jobCategory"
+                                            class="form-select @error('jobCategory') is-invalid @enderror js-select2"
+                                            id="job-category" wire:model='jobCategory'>
+                                            <option value="choisir">{{__('Choissisez une option')}}</option>
+                                            @foreach ($categories as $categorie)
+                                            <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('jobCategory') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div><!-- .form-group -->
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
                                     <label class="form-label" for="dificulties">{{('Niveau')}}</label>
                                     <select class="form-select @error('graduation') is-invalid @enderror js-select2"
                                         id="dificulties" wire:model.defer='graduation'>

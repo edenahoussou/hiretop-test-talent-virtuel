@@ -1,9 +1,10 @@
 <div class="nk-footer">
     <div class="container-fluid">
         <div class="nk-footer-wrap">
-            <div class="nk-footer-copyright"> &copy; 2023 DashLite. Template by <a href="https://softnio.com" target="_blank">Softnio</a>
+            <div class="nk-footer-copyright"> &copy; {{ date('Y') }} {{ config('app.name') }}. Made with   <a href="https://edenahoussou.github.io/portfolio/index.html" target="_blank"><em class="icon ni ni-heart"></em>by Eden Ahoussou </a>
+               
             </div>
-            <div class="nk-footer-links">
+            {{-- <div class="nk-footer-links">
                 <ul class="nav nav-sm">
                     <li class="nav-item dropup">
                         <a href="#" class="dropdown-toggle dropdown-indicator has-indicator nav-link text-base" data-bs-toggle="dropdown" data-offset="0,10"><span>English</span></a>
@@ -32,11 +33,11 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a data-bs-toggle="modal" href="#region" class="nav-link"><em class="icon ni ni-globe"></em><span class="ms-1">Select Region</span></a>
-                    </li>
+                    </li> 
                 </ul>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Company;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
@@ -20,4 +21,8 @@ class Industry extends Model
             ->saveSlugsTo('slug');
     }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class, 'industry_id');
+    }
 }

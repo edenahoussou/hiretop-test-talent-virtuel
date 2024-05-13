@@ -56,6 +56,13 @@
                         </a>
                     </li><!-- .nk-menu-item -->
 
+                    <li class="nk-menu-item">
+                        <a href="{{route('home')}}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
+                            <span class="nk-menu-text">{{ __('Acceuil') }}</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+
 
                     <li class="nk-menu-heading">
                         <h6 class="overline-title text-primary-alt">{{__('Gestion de compte')}}</h6>
