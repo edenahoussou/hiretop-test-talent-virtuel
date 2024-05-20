@@ -16,10 +16,6 @@
                   travail')}}</a></li>
               <li><a class="{{ Request::is('/companies') ? 'active' : ''}}"
                   href="{{route('companies')}}">{{__('Entreprises')}}</a></li>
-              <li><a class="{{ Request::is('/candidates') ? 'active' : ''}}"
-                  href="{{route('candidates')}}">{{__('Candidats')}}</a></li>
-              <li><a class="{{ Request::is('/blogs') ? 'active' : ''}}" href="{{route('blogs')}}">{{__('Blog')}}</a>
-              </li>
               <li><a class="{{ Request::is('/about-us') ? 'active' : ''}}" href="{{route('about-us')}}">{{__('A
                   propos')}}</a> </li>
               <li><a class="{{ Request::is('/contact') ? 'active' : ''}}"
@@ -35,7 +31,7 @@
         <div class="mobile-account">
           <h6 class="mb-10">{{__('Mon compte')}}</h6>
           <ul class="mobile-menu font-heading">
-            <li><a href="#">{{__('Tableau de bord')}}</a></li>
+            <li><a href="{{ route('dashboard') }}">{{__('Tableau de bord')}}</a></li>
             <li><a href="#">{{__('Mon profil')}}</a></li>
             <li><a href="#">{{__('Mes candidatures')}}</a></li>
             <li><a href="#">{{__('Parametres')}}</a></li>
@@ -68,10 +64,10 @@
                   travail')}}</a></li>
               <li><a class="{{ Request::is('/companies') ? 'active' : ''}}"
                   href="{{route('companies')}}">{{__('Entreprises')}}</a></li>
-              <li><a class="{{ Request::is('/candidates') ? 'active' : ''}}"
+              {{-- <li><a class="{{ Request::is('/candidates') ? 'active' : ''}}"
                   href="{{route('candidates')}}">{{__('Candidats')}}</a></li>
               <li><a class="{{ Request::is('/blogs') ? 'active' : ''}}" href="{{route('blogs')}}">{{__('Blog')}}</a>
-              </li>
+              </li> --}}
               <li><a class="{{ Request::is('/about-us') ? 'active' : ''}}" href="{{route('about-us')}}">{{__('A
                   propos')}}</a> </li>
               <li><a class="{{ Request::is('/contact') ? 'active' : ''}}"

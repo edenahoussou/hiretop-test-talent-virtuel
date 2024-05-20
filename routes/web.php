@@ -11,6 +11,9 @@ use App\Http\Livewire\Front\CompaniesComponent;
 use App\Http\Livewire\Front\CandidatesComponent;
 use App\Http\Livewire\Front\JobDetailsComponent;
 use App\Http\Livewire\Front\SetUserRoleComponent;
+use App\Http\Livewire\Front\CompanyDetailsComponent;
+use App\Http\Livewire\Company\CandidateDetailsComponent;
+use App\Http\Livewire\Company\Post\ManagePostJobApplicants;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +34,14 @@ Route::get('/jobs/{search_terms?}/{selectedIndustry?}/{selectedLocation?}', Jobs
 
 Route::get('/job/{slug}/details',JobDetailsComponent::class)->name('job.details');
 
-Route::get('/candidates', CandidatesComponent::class)->name('candidates');
+Route::get('/job/{slug}/candidates/', ManagePostJobApplicants::class)->name('candidates');
 
-Route::get('companies', CompaniesComponent::class)->name('companies');
+Route::get('/candidates/{id}/details', CandidateDetailsComponent::class)->name('candidate.details');
+
+Route::get('companies/{slug}/details', CompanyDetailsComponent::class)->name('company.details');
+
+Route::get('companies/{letter?}', CompaniesComponent::class)->name('companies');
+
 
 Route::get('about-us', AboutUsComponent::class)->name('about-us');
 

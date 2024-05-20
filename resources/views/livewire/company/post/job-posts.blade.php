@@ -94,15 +94,16 @@
                                 </td>
                                 <td class="nk-tb-col tb-col-lg">
                                     <ul class="project-users g-1">
+                                        @foreach($job->candidates->take(3) as $key => $candidate)
                                         <li>
-                                            <div class="user-avatar sm bg-primary"><span>A</span></div>
+                                            <div class="user-avatar sm bg-blue"><img src="{{Storage::url($candidate->user->photo)}}" alt=""></div>
                                         </li>
+                                        @endforeach
+                                        @if($job->candidates->count() > 3)
                                         <li>
-                                            <div class="user-avatar sm bg-blue"><img src="./images/avatar/b-sm.jpg" alt=""></div>
+                                            <div class="user-avatar bg-light sm"><span>+{{ $job->candidates->count() - 3 }}</span></div>
                                         </li>
-                                        <li>
-                                            <div class="user-avatar bg-light sm"><span>+12</span></div>
-                                        </li>
+                                        @endif
                                     </ul>
                                 </td>
                                 <td class="nk-tb-col tb-col-xxl">
@@ -127,7 +128,7 @@
                                                 <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <ul class="link-list-opt no-bdr">
-                                                        <li><a href="html/apps-kanban.html"><em class="icon ni ni-eye"></em><span>{{__('Voir les candidatures')}}</span></a></li>
+                                                        <li><a href="{{ route('candidates', ['slug' =>$job->slug])}}"><em class="icon ni ni-eye"></em><span>{{__('Voir les candidatures')}}</span></a></li>
                                                         <li><a wire:click="$emit('editJob', {{ $job->id }})" href="#"><em class="icon ni ni-edit"></em><span>{{__('Modifier') }}</span></a></li>
                                                         <li><a href="#"><em class="icon ni ni-close"></em><span>{{__('Annuler') }}</span></a></li>
                                                     </ul>

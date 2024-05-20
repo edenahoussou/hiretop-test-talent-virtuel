@@ -8,6 +8,7 @@ class ContactComponent extends Component
 {
     public function render()
     {
-        return view('livewire.front.contact-component');
+        $title = 'Contact';
+        return view('livewire.front.contact-component')->extends('layouts.master', compact('title'))->section('content');;
     }
 }

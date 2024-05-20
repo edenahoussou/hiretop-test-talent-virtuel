@@ -36,6 +36,12 @@ class JobsComponent extends Component
         return $filteredJobs->count();
     }
 
+    public function apply($jobSlug)
+    {
+        //dd($jobSlug);
+        $this->redirect(route('job.details',['slug' => $jobSlug]));
+    }
+
     public function countJobPostGroupByExperienceLevel($experienceId)
     {
         $filteredJobs = $this->foundJobs->filter(function($job) use ($experienceId){
@@ -64,7 +70,7 @@ class JobsComponent extends Component
 
         $title = $this->title;
         
-
-        return view('livewire.front.jobs-component',compact('jobs','industries', 'locations', 'skills','experiences', 'types'))->extends('layouts.master', compact('title'))->section('content');
+        return view('livewire.front.jobs-component',compact('jobs','industries', 'locations', 'skills','experiences', 'types'))
+        ->extends('layouts.master', compact('title'))->section('content');
     }
 }

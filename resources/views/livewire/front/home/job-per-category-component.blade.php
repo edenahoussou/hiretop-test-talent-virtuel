@@ -39,12 +39,12 @@
                                     </div>
                                   </div>
                                   <div class="card-block-info">
-                                    <h5><a href="job-details.html">{{$job->title}}</a></h5>
+                                    <h5><a href="{{route('job.details', $job->slug)}}">{{$job->title}}</a></h5>
                                     <div class="mt-5"><span class="card-location mr-15">{{$job->location->address}}</span><span class="card-time">{{ $job->created_at->diffInMinutes(now()) }} minutes</span></div>
                                     <div class="card-2-bottom mt-20">
                                       <div class="row">
-                                        <div class="col-xl-7 col-md-7 mb-2"><a class="btn btn-tags-sm mr-5" href="jobs-grid.html">Figma</a><a class="btn btn-tags-sm mr-5" href="jobs-grid.html">Adobe XD</a>
-                                        </div>
+                                        {{-- <div class="col-xl-7 col-md-7 mb-2"><a class="btn btn-tags-sm mr-5" href="jobs-grid.html">{{ $job->category->name }}</a>
+                                        </div> --}}
                                         <div class="col-xl-5 col-md-5 text-lg-end">
                                             <span class="card-text-price">{{ number_format($job->salary, 0, '.') }} {{ config('app.currency') }}</span>
                                         </div>

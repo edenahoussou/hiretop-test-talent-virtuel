@@ -13,9 +13,7 @@
                 travail')}}</a></li>
             <li><a class="{{ Request::is('/companies') ? 'active' : ''}}" href="{{route('companies')}}">{{__('Toutes les
                 entreprises')}}</a></li>
-            <li><a class="{{ Request::is('/candidates') ? 'active' : ''}}"
-                href="{{route('candidates')}}">{{__('Candidats')}}</a></li>
-            <li><a class="{{ Request::is('/blogs') ? 'active' : ''}}" href="{{route('blogs')}}">{{__('Blog')}}</a></li>
+            
             <li><a class="{{ Request::is('/about-us') ? 'active' : ''}}" href="{{route('about-us')}}">{{__('A
                 propos')}}</a> </li>
             <li><a class="{{ Request::is('/contact') ? 'active' : ''}}"

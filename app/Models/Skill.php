@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\JobPost;
 use App\Models\Candidat;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -26,4 +27,8 @@ class Skill extends Model
         return $this->belongsToMany(Candidat::class, 'candidat_skill', 'skill_id', 'candidat_id');
     }
 
+    public function jobs()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_post_skills', 'skill_id', 'job_post_id');
+    }
 }

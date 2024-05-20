@@ -20,10 +20,14 @@ class JobDetailsComponent extends Component
 
     public function isApplied()
     {
-        $candidat = Candidat::where('user_id', auth()->user()->id)->first();
+        if(auth()->check())
+        {
+            $candidat = Candidat::where('user_id', auth()->user()->id)->first();
         if ($candidat->jobs()->wherePivot('job_post_id', $this->job->id)->exists()) {
             return true;
         }
+        }
+        return false;
     }
 
     public function apply()

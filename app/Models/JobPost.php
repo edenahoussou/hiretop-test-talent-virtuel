@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Skill;
 use App\Models\Company;
 use App\Models\Candidat;
 use App\Models\Graduation;
@@ -69,7 +70,14 @@ class JobPost extends Model
     {
         return $this->belongsToMany(Candidat::class, 'job_post_candidates', 'job_post_id', 'candidate_id')
                 ->withPivot('created_at', 'updated_at','slug', 'candidate_status','cover_letter', 'resume', 'review','disqualification_reason','deleted_at')
+                ->using(JobApllicant::class)
                 ->withTimestamps();
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'job_post_skills', 'job_post_id', 'skill_id')
+                    ->withTimestamps();
     }
 
 

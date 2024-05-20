@@ -85,7 +85,7 @@
                             <div class="row">
                               <div class="col-lg-7 col-7"><span class="card-text-price"> {{$job->salary}}</span><span class="text-muted"></span>{{config('app.currency')}}</div>
                               <div class="col-lg-5 col-5 text-end">
-                                <div class="btn btn-apply-now" data-bs-toggle="modal" data-bs-target="#ModalApplyJobForm">{{__('Postuler')}}</div>
+                                <div class="btn btn-apply-now" wire:click='apply("{{$job->slug}}")'>{{__('Postuler')}}</div>
                               </div>
                             </div>
                           </div>
