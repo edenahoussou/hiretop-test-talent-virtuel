@@ -26,7 +26,7 @@
                 <div class="mt-50">
                     
 
-                    <div class="tab-content" id="myTabContent-{{ $category->id }}">
+                    <div class="tab-content" id="myTabContent">
                         @foreach ($jobCategories as $category)
                         <div class="tab-pane fade @if($selectedCategory == $category->id) show active @endif" id="tab-job-{{ $category->id }}" role="tabpanel" aria-labelledby="tab-job-{{$category->id}}">
                             <div class="row">

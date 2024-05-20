@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Livewire\Front\HomeComponent;
 use App\Http\Livewire\Front\JobsComponent;
 use App\Http\Livewire\Front\BlogsComponent;
@@ -50,6 +51,19 @@ Route::get('/blogs', BlogsComponent::class)->name('blogs');
 Route::get('/set-user-role', SetUserRoleComponent::class)->name('select-role')->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', DashboardComponent::class)->name('dashboard')->middleware(['auth', 'verified','hasRole']);
+
+Route::get('/clean', function () {
+    Artisan::call('view:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+    Artisan::call('event:clear');
+    Artisan::call('optimize');
+    // Artisan::call('composer dump-autoload');
+    session()->flush();
+    
+
+})->name('clean');
 
 // add route to get php info
 

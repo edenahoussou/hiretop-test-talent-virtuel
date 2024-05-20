@@ -1,7 +1,7 @@
 <footer class="footer mt-50">
     <div class="container">
       <div class="row">
-        <div class="footer-col-1 col-md-3 col-sm-12"><a href="index.html"><img alt="{{config('app.name')}}" src="#"></a>
+        <div class="footer-col-1 col-md-3 col-sm-12"><a href="{{route('home')}}"><img  alt="{{config('app.name')}}" src="{{asset('assets/imgs/template/logo.svg')}}"></a>
           <div class="mt-20 mb-20 font-xs color-text-paragraph-2">HireTop est le cœur de la communauté de dev et le meilleur outil pour découvrir et se connecter avec des developpeurs et des emplois partout dans le monde.</div>
           <div class="footer-social"><a class="icon-socials icon-facebook" href="#"></a><a class="icon-socials icon-twitter" href="#"></a><a class="icon-socials icon-linkedin" href="#"></a></div>
         </div>
