@@ -13,9 +13,7 @@
                 travail')}}</a></li>
             <li><a class="{{ Request::is('/companies') ? 'active' : ''}}" href="{{route('companies')}}">{{__('Toutes les
                 entreprises')}}</a></li>
-            <li><a class="{{ Request::is('/candidates') ? 'active' : ''}}"
-                href="{{route('candidates')}}">{{__('Candidats')}}</a></li>
-            <li><a class="{{ Request::is('/blogs') ? 'active' : ''}}" href="{{route('blogs')}}">{{__('Blog')}}</a></li>
+            
             <li><a class="{{ Request::is('/about-us') ? 'active' : ''}}" href="{{route('about-us')}}">{{__('A
                 propos')}}</a> </li>
             <li><a class="{{ Request::is('/contact') ? 'active' : ''}}"
@@ -23,10 +21,17 @@
             @auth
             <li class="has-children"><a href="javascript:void(0)">Mon compte</a>
               <ul class="sub-menu">
-                <li><a href="#">{{__('Tableau de bord')}}</a></li>
-                <li><a href="#">{{__('Mon profil')}}</a></li>
-                <li><a href="#">{{__('Mes candidatures')}}</a></li>
-                <li><a href="#">{{__('Parametres')}}</a></li>
+                <li><a href="{{ route('dashboard') }}">{{__('Tableau de bord')}}</a></li>
+                <li><a href="@if(auth()->user()->hasRole('Talent')){{ route('candidate.profile') }}@else{{ route('company.owner.profile') }}@endif">{{__('Mon profil')}}</a></li>
+                @if(auth()->user()->hasRole('Talent'))
+                <li><a href="{{ route('candidate.applied-jobs') }}">{{__('Mes candidatures')}}</a></li>
+                <li><a href="{{ route('candidate.recommendations') }}">{{__('Mes recommandations')}}"></a></li>
+                <li><a href="{{ route('candidate.messages') }}">{{__('Messages')}}</a></li>
+                @elseif(auth()->user()->hasRole('Entreprise'))
+                <li><a href="{{ route('company.applicants') }}">{{__('Candidats')}}</a></li>
+                <li><a href="{{ route('company.manage-post-job') }}">{{__('Mes offres d\'emplois')}}</a></li>
+                <li><a href="{{ route('company.messages') }}">{{__('Messages')}}</a></li>
+                @endif
                 <form action="{{ route('logout') }}" method="POST">
                   @csrf
                   <li><a onclick="event.preventDefault();

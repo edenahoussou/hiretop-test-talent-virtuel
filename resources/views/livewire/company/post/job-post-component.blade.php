@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{asset('admin/assets/css/editors/quill.css?ver=3.1.3')}}">
 @endpush
 <div>
-    <div class="modal fade" id="modalCreate" wire:ignore.self>
+    <div data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" class="modal fade" id="modalCreate" wire:ignore.self>
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <a href="javascript:void(0)" wire:click='close' class="close" data-bs-dismiss="modal"
@@ -11,7 +11,7 @@
                     <h5 class="modal-title">{{ $title ?? 'Ajouter une nouvelle offre d\'emploi'}}</h5>
                     <form action="#" class="pt-2">
                         <div class="row gy-3 gx-gs">
-                            <div class="col-12">
+                            <div wire:ignore.self class="col-12">
                                 <div class="form-group">
                                     <label class="form-label" for="job-name">{{('Titre du poste')}}</label>
                                     <div class="form-control-wrap">
@@ -22,7 +22,7 @@
                                     </div>
                                 </div><!-- .form-group -->
                             </div>
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" for="job-type">{{('Type')}}</label>
                                     <div class="form-control-wrap">
@@ -38,7 +38,23 @@
                                     </div>
                                 </div><!-- .form-group -->
                             </div>
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="job-category">{{('Categories')}}</label>
+                                    <div class="form-control-wrap">
+                                        <select wire:model.defer="jobCategory"
+                                            class="form-select @error('jobCategory') is-invalid @enderror js-select2"
+                                            id="job-category" wire:model='jobCategory'>
+                                            <option value="choisir">{{__('Choissisez une option')}}</option>
+                                            @foreach ($categories as $categorie)
+                                            <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('jobCategory') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div><!-- .form-group -->
+                            </div>
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" for="dificulties">{{('Niveau')}}</label>
                                     <select class="form-select @error('graduation') is-invalid @enderror js-select2"
@@ -51,7 +67,7 @@
                                     @error('graduation') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div><!-- .form-group -->
                             </div>
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" for="job-lesson">{{('Salaire en')}} {{
                                         Config::get('app.currency', 'FCFA') }}</label>
@@ -62,7 +78,7 @@
                                 </div><!-- .form-group -->
                                 @error('salary') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label" for="thumb">{{__('Experiences')}}</label>
                                     <select class="form-select @error('jobExperience') is-invalid @enderror js-select2"
@@ -75,7 +91,39 @@
                                     @error('jobExperience') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div><!-- .form-group -->
                             </div>
-                            <div class="col-12">
+                            <div wire:ignore.self class="col-6" id="select-skills">
+                                <div class="form-group">
+                                    <label class="form-label" for="thumb">{{__('Competences associees')}}</label>
+                                    <div wire:ignore>
+                                        <select multiple data-search="on" class="form-select @error('jobSkills') is-invalid @enderror js-select2"
+                                        id="skills">
+                                        <optgroup label="{{__('Ajouter une competence')}}">
+                                            <option value="create">{{__('Ajouter')}}</option>
+                                        </optgroup>
+                                        <optgroup label="{{__('Competences existantes')}}">
+                                            @foreach ($skills as $skill)
+                                            <option @if(in_array($skill->id, $jobSkills) ) selected @endif value="{{ $skill->id }}">{{ $skill->title }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                        
+                                    </select>
+                                    </div>
+                                    @error('jobSkills') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div><!-- .form-group -->
+                            </div>
+
+                            <div wire:ignore.self id="create-skills" class="col-6" style="display: none">
+                                <div class="form-group">
+                                    <label class="form-label" for="thumb">{{__('Competences associees')}}</label>
+                                    <div class="form-control-wrap">
+                                        <input title="{{__('Chaque competence est separee par une virgule Ex: Php, Laravel')}}" wire:model.defer="createSkills" type="text"
+                                            class="form-control @error('create-skills') is-invalid @enderror" id="job-skills"
+                                            placeholder="Chaque competence est separee par une virgule Ex: Php, Laravel">
+                                        @error('create-skills') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+                                </div><!-- .form-group -->
+                            </div>
+                            <div wire:ignore.self class="col-12">
                                 <div class="form-group">
                                     <label class="form-label" for="thumb">{{__('Description du poste')}}</label>
                                     <div class="form-control-wrap @error('jobDescription') is-invalid @enderror"
@@ -86,7 +134,7 @@
                                 </div><!-- .form-group -->
                             </div>
 
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">{{__('Deadline')}}</label>
                                     <div class="form-control-wrap" wire:ignore.self>
@@ -100,7 +148,7 @@
                                 </div><!-- .form-group -->
                             </div>
 
-                            <div class="col-6">
+                            <div wire:ignore.self class="col-6">
                                 <div class="form-group">
                                     <label class="form-label">{{__('Lieu')}}</label>
                                     <div class="form-control-wrap" wire:ignore.self>
@@ -117,7 +165,7 @@
                                 </div><!-- .form-group -->
                             </div>
 
-                            <div class="col-12">
+                            <div wire:ignore.self class="col-12">
                                 <div class="form-group">
                                     <label class="form-label" for="thumb">{{__('Statut')}}</label>
                                     <div class="form-control-wrap">
@@ -221,6 +269,8 @@
 
     window.addEventListener('close-modal', event => {
         $('#modalCreate').modal('hide');
+        //empty all select dropdown
+        $('#skills').val(null).trigger('change');
     });
 
     $('#closing-date').on('change', function() {
@@ -231,7 +281,21 @@
     window.addEventListener('open-modal', event => {
         $('#modalCreate').modal('show');
         quillDescription.root.innerHTML = event.detail.jobDescription;
+        $('#skills').val(event.detail.jobSkills).trigger('change');
     });
+
+   $('#skills').on('change', function() {
+    let selected = $(this).val();
+    if(selected == 'create') {
+       // console.log(selected);
+        $('#create-skills').css('display', 'block');
+        $('#select-skills').css('display', 'none');
+        @this.set('jobSkills', selected);
+    } else if(selected !== null && selected.length > 0) {
+        @this.set('jobSkills', selected);
+    }
+    });
+    
     
 </script>
 @endpush

@@ -11,5 +11,6 @@
 <script src="{{ asset('assets/js/plugins/scrollup.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}?v=4.1"></script>
+<script src="{{asset('admin/assets/js/init-toast.js')}}"></script>
 
 

@@ -18,4 +18,9 @@ class ExperienceLevel extends Model
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
     }
+
+    public function jobs()
+    {
+        return $this->hasMany(JobPost::class,'experience_level_id');
+    }
 }

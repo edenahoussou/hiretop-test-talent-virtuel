@@ -11,4 +11,9 @@ class CompanyLocation extends Model
 
     protected $guarded = ['id'];
 
+    public function jobposts()
+    {
+        return $this->hasMany(JobPost::class, 'location_id');
+    }
+
 }

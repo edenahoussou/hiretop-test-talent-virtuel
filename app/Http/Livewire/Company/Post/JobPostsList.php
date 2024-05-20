@@ -30,6 +30,11 @@ class JobPostsList extends Component
             return $this->deadlineStatusClass['new'];
         }
     }
+
+    public function percentOfPertinentApplications($job)
+    {
+        
+    }
     public function render()
     {
         $title = __('Vos offres d\'emploi');

@@ -8,6 +8,7 @@ class AboutUsComponent extends Component
 {
     public function render()
     {
-        return view('livewire.front.about-us-component');
+        $title = __('A propos de nous');
+        return view('livewire.front.about-us-component')->extends('layouts.master', compact('title'))->section('content');
     }
 }
